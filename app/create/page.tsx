@@ -49,7 +49,7 @@ const CreatePage = () => {
     <>
       <PageProgress mainRef={mainRef} />
       <Topnav />
-      <main className="min-h-full w-full bg-slate-200" ref={mainRef}>
+      <main className="w-full bg-primary-foreground" ref={mainRef}>
         <Sidenav handleScroll={handleScroll} />
         <div className="pl-[400px] pt-20 pr-10 w-full space-y-10">
           <CardProfile ref={profileRef} />
