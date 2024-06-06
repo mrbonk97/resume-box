@@ -51,7 +51,7 @@ export function EditTitleModal() {
     <Dialog>
       <DialogTrigger asChild>
         <Button
-          variant={"secondary"}
+          variant={"outline"}
           className="h-8 w-8 p-0 rounded-full"
           onClick={() => form.reset()}
         >

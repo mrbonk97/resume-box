@@ -8,7 +8,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { ChangeEvent, forwardRef, useState } from "react";
 import { Button } from "../ui/button";
-import { MinusCircle, PlusSquare } from "lucide-react";
+import { MinusCircle, PlusSquare, X } from "lucide-react";
 import { certiType, languageType } from "@/types";
 import { Switch } from "../ui/switch";
 
@@ -62,10 +62,10 @@ export const CardCertificate = forwardRef<HTMLDivElement>((props, ref) => {
       {isOn && (
         <>
           <CardContent className="mt-5">
-            <ul className="space-y-2 max-w-[1000px]">
+            <ul className="space-y-5">
               {certi.map((item) => (
                 <li
-                  className="flex gap-5 bg-slate-50/50 py-5 px-10 rounded hover:bg-slate-100 duration-200"
+                  className="flex gap-5 bg-slate-50 py-5 px-10 rounded hover:bg-slate-100 duration-200 relative"
                   key={item.order}
                 >
                   <Input
@@ -82,10 +82,11 @@ export const CardCertificate = forwardRef<HTMLDivElement>((props, ref) => {
                     name="score"
                   />
                   <Button
-                    variant={"destructive"}
+                    className="absolute top-3 right-3 p-0 h-4 w-4 flex2"
+                    variant={"ghost"}
                     onClick={() => handleDelete(item.order)}
                   >
-                    <MinusCircle />
+                    <X size={16} className="text-primary" />
                   </Button>
                 </li>
               ))}

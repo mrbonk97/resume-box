@@ -9,12 +9,14 @@ export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <main className="h-full w-full flex items-center flex-col justify-evenly">
-      <h1 className="text-7xl text-blue-500 font-bold">이력서 박스</h1>
+      <h1 className="text-7xl text-blue-500 font-bold tracking-wide">
+        이력서 박스
+      </h1>
       <Link
         href={"/auth"}
         onMouseOver={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
-        className="p-5 hover:bg-slate-100 rounded-2xl duration-100"
+        className="p-5 hover:bg-primary-foreground rounded-2xl duration-100"
       >
         {isOpen ? (
           <PackageOpen

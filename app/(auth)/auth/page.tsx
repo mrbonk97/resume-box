@@ -46,7 +46,7 @@ const SiginInPage = () => {
   const handleSignIn = (values: z.infer<typeof signInSchema>) => {};
 
   return (
-    <main className="h-full w-full radical-bg flex2">
+    <main className="h-full w-full flex justify-center pt-40 bg-secondary">
       <Tabs defaultValue="sign-in" className="w-[400px]">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="sign-in">로그인</TabsTrigger>

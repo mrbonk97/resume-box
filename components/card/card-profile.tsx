@@ -23,13 +23,13 @@ export const CardProfile = forwardRef<HTMLDivElement>((props, ref) => {
           <Input
             placeholder="이름"
             id="name"
-            className="mb-3 focus-visible:ring-transparent"
+            className="mt-1 mb-3 focus-visible:ring-transparent"
           />
           <Label htmlFor="email">이메일</Label>
           <Input
             placeholder="resume@naver.com"
             id="email"
-            className="mb-3 focus-visible:ring-transparent"
+            className="mt-1 mb-3 focus-visible:ring-transparent"
           />
           <Label htmlFor="mobile-no">전화번호</Label>
           <Input
