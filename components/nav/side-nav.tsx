@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { RefObject } from "react";
 import { Pencil } from "lucide-react";
 import { EditTitleModal } from "../modal/edit-title-modal";
+import { ModeToggle } from "../mode-toggle";
 
 interface SidenavProps {
   handleScroll: (type: string) => void;
@@ -62,6 +63,8 @@ export const Sidenav: React.FC<SidenavProps> = ({ handleScroll }) => {
           자기소개서
         </li>
       </ul>
+
+      <ModeToggle />
     </aside>
   );
 };

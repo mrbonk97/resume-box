@@ -76,7 +76,7 @@ export function EditTitleModal() {
                     <Input
                       placeholder="제목을 입력해주세요"
                       {...field}
-                      className="py-6"
+                      className="py-6 focus-visible:ring-0 focus-visible:ring-offset-0"
                     />
                   </FormControl>
                   <FormMessage />
