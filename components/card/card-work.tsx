@@ -14,6 +14,14 @@ import { MinusCircle, PlusSquare } from "lucide-react";
 import { useState } from "react";
 import { workType } from "@/types";
 import { forwardRef } from "react";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "../ui/label";
 
 export const CardWork = forwardRef<HTMLDivElement>((props, ref) => {
   const [work, setWork] = useState<workType[]>([
@@ -49,7 +57,6 @@ export const CardWork = forwardRef<HTMLDivElement>((props, ref) => {
     work.map((item, idx2) => {
       if (idx != idx2) _work.push(item);
     });
-
     setWork(_work);
   };
 
@@ -67,20 +74,28 @@ export const CardWork = forwardRef<HTMLDivElement>((props, ref) => {
         <>
           <CardContent className="mt-5 space-y-5">
             {work.map((item, idx) => (
-              <article
-                className="space-y-5 flex items-center justify-between bg-slate-100 p-5 rounded"
-                key={idx}
-              >
-                <div className="space-y-4">
-                  <Input placeholder="이름" />
-                  <Input placeholder="resume@naver.com" />
-                  <Input placeholder="010-0000-0000" />
+              <article className="flex2 gap-10 p-10 rounded" key={idx}>
+                <div className="p-10">
+                  <div className="flex gap-5 justify-between">
+                    <div></div>
+                  </div>
+                  <div>
+                    <Input />
+                    <Checkbox id="isWorking" />
+                    <label htmlFor="isWorking">재직 중</label>
+                  </div>
+                  <div>
+                    <Label>회사명</Label>
+                    <Input />
+                  </div>
+                  <div>
+                    <Label>부서</Label>
+                    <Input />
+                  </div>
                 </div>
-                <div>
-                  <Button variant={"ghost"} onClick={() => handleDelete(idx)}>
-                    <MinusCircle className="text-blue-500" size={36} />
-                  </Button>
-                </div>
+                <Button variant={"ghost"} onClick={() => handleDelete(idx)}>
+                  <MinusCircle className="text-blue-500" size={36} />
+                </Button>
               </article>
             ))}
           </CardContent>
