@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const inter = Noto_Sans_KR({ subsets: ["latin"] });
 
@@ -24,7 +25,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <ClerkProvider>{children}</ClerkProvider>
         </ThemeProvider>
       </body>
     </html>

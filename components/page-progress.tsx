@@ -19,7 +19,7 @@ export const PageProgress: React.FC<PageProgressProps> = ({ mainRef }) => {
 
   return (
     <progress
-      className="fixed w-full top-0 z-20 h-3"
+      className="fixed w-full top-0 z-50 h-3"
       value={0}
       max={100}
       ref={ref}

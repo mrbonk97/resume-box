@@ -1,0 +1,40 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1004 620" width="1004" height="620">
+	<title>6051671-ai</title>
+	<defs>
+		<linearGradient id="g1" x2="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(553.773,499.304,-1296.125,1437.518,116.655,-451.676)">
+			<stop offset="0" stop-color="#7d33a9"/>
+			<stop offset="1" stop-color="#ff31fa"/>
+		</linearGradient>
+		<linearGradient id="g2" x2="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(517.791,510.176,-1000.779,1015.716,499.534,-114.371)">
+			<stop offset="0" stop-color="#531db5"/>
+			<stop offset=".456" stop-color="#8733ff"/>
+		</linearGradient>
+		<linearGradient id="g3" x2="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(429.608,393.43,-377.234,411.922,762.572,190.36)">
+			<stop offset=".001" stop-color="#221dac"/>
+			<stop offset=".337" stop-color="#221dff"/>
+		</linearGradient>
+	</defs>
+	<style>
+		tspan { white-space:pre } 
+		.s0 { fill: #ff31fa } 
+		.s1 { fill: url(#g1) } 
+		.s2 { fill: #8733ff } 
+		.s3 { fill: url(#g2) } 
+		.s4 { fill: #221dff } 
+		.s5 { fill: url(#g3) } 
+	</style>
+	<g id="OBJECTS">
+		<g id="&lt;Group&gt;">
+			<g id="&lt;Group&gt;">
+				<g id="&lt;Group&gt;">
+					<path id="&lt;Path&gt;" class="s0" d="m504.5 3.8l-500.3 496.5 82.1 82.8c46 46.4 121 46.6 167.4 0.6l416.3-413.2z"/>
+					<path id="&lt;Path&gt;" class="s1" d="m504.5 3.8l-500.3 496.5 82.1 82.8c46 46.4 121 46.6 167.4 0.6l416.3-413.2z"/>
+					<path id="&lt;Path&gt;" class="s2" d="m670 170.5l-333.6 331.1 82.2 82.7c46 46.4 120.9 46.7 167.3 0.7l249.6-247.7z"/>
+					<path id="&lt;Path&gt;" class="s3" d="m670 170.5l-333.6 331.1 82.2 82.7c46 46.4 120.9 46.7 167.3 0.7l249.6-247.7z"/>
+					<path id="&lt;Path&gt;" class="s4" d="m681 515.3l-12.3-12.5 166.8-165.5 165.5 166.8-12.5 12.4c-85.2 84.6-222.9 84-307.5-1.2z"/>
+					<path id="&lt;Path&gt;" class="s5" d="m681 515.3l-12.3-12.5 166.8-165.5 165.5 166.8-12.5 12.4c-85.2 84.6-222.9 84-307.5-1.2z"/>
+				</g>
+			</g>
+		</g>
+	</g>
+</svg>

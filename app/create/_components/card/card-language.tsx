@@ -5,16 +5,30 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import { Input } from "@/components/ui/input";
 import { ChangeEvent, forwardRef, useState } from "react";
-import { Button } from "../ui/button";
-import { MinusCircle, PlusSquare, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { PlusSquare, XIcon } from "lucide-react";
 import { linkType } from "@/types";
-import { Switch } from "../ui/switch";
+import { Switch } from "@/components/ui/switch";
 
-export const CardLink = forwardRef<HTMLDivElement>((props, ref) => {
-  const [links, setLinks] = useState<linkType[]>([]);
+export const CardLanguage = forwardRef<HTMLDivElement>((props, ref) => {
   const [isOn, setIsOn] = useState(false);
+  const [links, setLinks] = useState<linkType[]>([
+    {
+      order: 0,
+      desc: "",
+      url: "",
+    },
+  ]);
 
   const handleAdd = () => {
     setLinks([
@@ -33,60 +47,62 @@ export const CardLink = forwardRef<HTMLDivElement>((props, ref) => {
     links.map((item) => {
       if (item.order != idx) _links.push({ ...item, order: count++ });
     });
-    console.log(_links);
-
     setLinks(_links);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>, idx: number) => {
     const { value, name } = e.target;
-    console.log(value, name, idx);
     if (name == "desc") links[idx].desc = value;
     if (name == "url") links[idx].url = value;
     setLinks([...links]);
   };
 
   return (
-    <Card className="relative p-5" ref={ref}>
-      <CardHeader>
-        <CardTitle>링크</CardTitle>
-        <Switch
-          className="absolute top-5 right-5"
-          onCheckedChange={(e) => setIsOn(e)}
-          checked={isOn}
-        />
+    <Card className="relative p-5 card" ref={ref}>
+      <CardHeader className="flex flex-row justify-between">
+        <CardTitle>외국어</CardTitle>
+        <Switch onCheckedChange={(e) => setIsOn(e)} checked={isOn} />
       </CardHeader>
-
       {isOn && (
         <>
           <CardContent className="mt-5">
             <ul className="space-y-5">
               {links.map((item) => (
-                <li
-                  className="flex gap-5 bg-slate-50 py-5 px-10 rounded hover:bg-slate-100 duration-200 relative"
-                  key={item.order}
-                >
+                <li className="flex gap-2" key={item.order}>
+                  <Select defaultValue="english">
+                    <SelectTrigger className="w-52">
+                      <SelectValue placeholder="언어" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="english">영어</SelectItem>
+                      <SelectItem value="japanese">일본어</SelectItem>
+                      <SelectItem value="chinese">중국어</SelectItem>
+                      <SelectItem value="other">직접입력</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Input className="w-32" placeholder="" disabled />
+
                   <Input
-                    placeholder="링크 유형"
-                    className="w-24"
+                    placeholder="시험명"
+                    className="w-40"
                     value={item.desc}
                     onChange={(e) => handleChange(e, item.order)}
                     id="desc"
                     name="desc"
                   />
                   <Input
-                    placeholder="https://"
+                    placeholder="성적"
                     value={item.url}
                     onChange={(e) => handleChange(e, item.order)}
                     id="url"
                     name="url"
                   />
                   <Button
-                    className="absolute top-3 right-3 p-0 h-4 w-4 flex2"
-                    variant={"ghost"}
+                    className="aspect-square p-0 m-0"
+                    variant={"secondary"}
                     onClick={() => handleDelete(item.order)}
                   >
-                    <X size={16} className="text-primary" />
+                    <XIcon />
                   </Button>
                 </li>
               ))}

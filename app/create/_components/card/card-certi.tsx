@@ -5,87 +5,95 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
+
 import { Input } from "@/components/ui/input";
 import { ChangeEvent, forwardRef, useState } from "react";
-import { Button } from "../ui/button";
-import { MinusCircle, PlusSquare, X } from "lucide-react";
-import { languageType } from "@/types";
-import { Switch } from "../ui/switch";
+import { Button } from "@/components/ui/button";
+import { PlusSquare, XIcon } from "lucide-react";
+import { linkType } from "@/types";
+import { Switch } from "@/components/ui/switch";
+import { DatePicker } from "@/components/date-picker";
 
-export const CardEducation = forwardRef<HTMLDivElement>((props, ref) => {
-  const [links, setLinks] = useState<languageType[]>([]);
+export const CardCertificate = forwardRef<HTMLDivElement>((props, ref) => {
   const [isOn, setIsOn] = useState(false);
+  const [links, setLinks] = useState<linkType[]>([
+    {
+      order: 0,
+      desc: "",
+      url: "",
+    },
+  ]);
 
   const handleAdd = () => {
     setLinks([
       ...links,
       {
         order: links.length,
-        language: "english",
-        test: "",
-        score: "",
+        desc: "",
+        url: "",
       },
     ]);
   };
 
   const handleDelete = (idx: number) => {
-    const _links: languageType[] = [];
+    const _links: linkType[] = [];
     let count = 0;
     links.map((item) => {
       if (item.order != idx) _links.push({ ...item, order: count++ });
     });
-    console.log(_links);
-
     setLinks(_links);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>, idx: number) => {
     const { value, name } = e.target;
-    console.log(value, name, idx);
-    if (name == "test") links[idx].test = value;
-    if (name == "score") links[idx].score = value;
+    if (name == "desc") links[idx].desc = value;
+    if (name == "url") links[idx].url = value;
     setLinks([...links]);
   };
 
   return (
-    <Card className="relative p-5" ref={ref}>
-      <CardHeader>
-        <CardTitle>학력</CardTitle>
-        <Switch
-          className="absolute top-5 right-5"
-          onCheckedChange={(e) => setIsOn(e)}
-          checked={isOn}
-        />
+    <Card className="relative p-5 card" ref={ref}>
+      <CardHeader className="flex flex-row justify-between items-center">
+        <CardTitle>자격증</CardTitle>
+        <Switch onCheckedChange={setIsOn} checked={isOn} />
       </CardHeader>
-
       {isOn && (
         <>
           <CardContent className="mt-5">
             <ul className="space-y-5">
               {links.map((item) => (
-                <li
-                  className="flex gap-5 bg-slate-50 py-5 px-10 rounded hover:bg-slate-100 duration-200 relative"
-                  key={item.order}
-                >
+                <li className="flex gap-2" key={item.order}>
                   <Input
-                    placeholder="시험명"
-                    className="w-24 uppercase"
-                    value={item.test}
+                    placeholder="자격증"
+                    className="w-36"
+                    value={item.desc}
                     onChange={(e) => handleChange(e, item.order)}
-                    name="test"
+                    id="desc"
+                    name="desc"
                   />
                   <Input
-                    placeholder="점수"
-                    value={item.score}
+                    placeholder="발급기관"
+                    value={item.url}
                     onChange={(e) => handleChange(e, item.order)}
-                    name="score"
+                    id="url"
+                    name="url"
                   />
+                  <DatePicker />
                   <Button
-                    className="absolute top-3 right-3 p-0 h-4 w-4 flex2"
-                    variant={"ghost"}
+                    className="aspect-square p-0 m-0"
+                    variant={"secondary"}
                     onClick={() => handleDelete(item.order)}
                   >
-                    <X size={16} className="text-primary" />
+                    <XIcon />
                   </Button>
                 </li>
               ))}

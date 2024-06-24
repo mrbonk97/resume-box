@@ -1,15 +1,16 @@
 "use client";
-import { Sidenav } from "@/components/nav/side-nav";
-import { CardWork } from "@/components/card/card-work";
-import { createRef, useEffect, useRef, useState } from "react";
-import { SaveNavbar } from "@/components/nav/floating-nav";
-import { CardProfile } from "@/components/card/card-profile";
-import { CardLink } from "@/components/card/card-link";
-import { CardLanguage } from "@/components/card/card-language";
-import { CardCertificate } from "@/components/card/card-certi";
-import { CardEducation } from "@/components/card/card-education";
+import { useEffect, useRef, useState } from "react";
 import { Topnav } from "@/components/nav/top-nav";
 import { PageProgress } from "@/components/page-progress";
+import { Separator } from "@/components/ui/separator";
+import { CardProfile } from "./_components/card/card-profile";
+import { CardWork } from "./_components/card/card-work";
+import { CardEducation } from "./_components/card/card-education";
+import { CardAward } from "./_components/card/card-award";
+import { CardCertificate } from "./_components/card/card-certi";
+import { CardLanguage } from "./_components/card/card-language";
+import { CardLink } from "./_components/card/card-link";
+import { Sidenav } from "./_components/navbar/side-nav";
 
 const CreatePage = () => {
   const profileRef = useRef<HTMLDivElement>(null);
@@ -19,22 +20,36 @@ const CreatePage = () => {
   const langRef = useRef<HTMLDivElement>(null);
   const linkRef = useRef<HTMLDivElement>(null);
   const coverRef = useRef<HTMLDivElement>(null);
-
+  const awardRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
 
   const handleScroll = (type: string) => {
-    if (type == "PROFILE")
-      profileRef.current?.scrollIntoView({ behavior: "smooth" });
-    if (type == "WORK") workRef.current?.scrollIntoView({ behavior: "smooth" });
-    if (type == "EDUCATION")
-      eduRef.current?.scrollIntoView({ behavior: "smooth" });
-    if (type == "CERTIFICATE")
-      certieRef.current?.scrollIntoView({ behavior: "smooth" });
-    if (type == "LANGUAGE")
-      langRef.current?.scrollIntoView({ behavior: "smooth" });
-    if (type == "LINK") linkRef.current?.scrollIntoView({ behavior: "smooth" });
-    if (type == "COVER")
-      coverRef.current?.scrollIntoView({ behavior: "smooth" });
+    switch (type) {
+      case "PROFILE":
+        profileRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+      case "WORK":
+        workRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+      case "EDUCATION":
+        eduRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+      case "AWARD":
+        awardRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+      case "CERTIFICATE":
+        certieRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+      case "LANGUAGE":
+        langRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+      case "LINK":
+        linkRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+      case "COVER":
+        coverRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+    }
   };
 
   const [isLoaded, setIsLoaded] = useState(false);
@@ -45,23 +60,39 @@ const CreatePage = () => {
 
   if (!isLoaded) return null;
 
+  const refs = [
+    profileRef,
+    workRef,
+    eduRef,
+    awardRef,
+    certieRef,
+    langRef,
+    linkRef,
+    // coverRef,
+  ];
+
   return (
     <>
-      <PageProgress mainRef={mainRef} />
+      {/* <PageProgress mainRef={mainRef} /> */}
       <Topnav />
-      <main className="w-full bg-primary-foreground" ref={mainRef}>
-        <Sidenav handleScroll={handleScroll} />
-        <div className="pl-[400px] pt-20 pr-10 w-full space-y-10">
+      <main>
+        <Sidenav handleScroll={handleScroll} refs={refs} />
+        <section className="pl-[25rem] pr-5 pt-20 max-w-[1420px] space-y-5">
           <CardProfile ref={profileRef} />
+          <Separator />
           <CardWork ref={workRef} />
+          <Separator />
           <CardEducation ref={eduRef} />
+          <Separator />
+          <CardAward ref={awardRef} />
+          <Separator />
           <CardCertificate ref={certieRef} />
+          <Separator />
           <CardLanguage ref={langRef} />
+          <Separator />
           <CardLink ref={linkRef} />
-          <div className="h-[600px] w-full"></div>
-          <div className="h-[600px] w-full" />
-        </div>
-        <SaveNavbar />
+          <div className="h-[100px] w-full" />
+        </section>
       </main>
     </>
   );

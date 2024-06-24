@@ -1,5 +1,4 @@
 import { CircleUserRound } from "lucide-react";
-import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,12 +8,19 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import { Logo } from "@/components/logo";
+import { Button } from "@/components/ui/button";
 
 export const Topnav = () => {
   return (
-    <header>
+    <header className="fixed w-full h-14 flex justify-between gap-5 px-32 items-center border-b z-20 bg-secondary shadow-sm">
+      <Button asChild variant={"ghost"}>
+        <Link href={"/board"}>
+          <Logo width={50} height={50} />
+        </Link>
+      </Button>
       <DropdownMenu modal={false}>
-        <DropdownMenuTrigger className="fixed z-10 top-5 right-5 hover:bg-white duration-200 rounded-full p-1">
+        <DropdownMenuTrigger className="hover:bg-white duration-200 rounded-full p-1">
           <CircleUserRound className="text-blue-500" size={36} />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -31,3 +37,6 @@ export const Topnav = () => {
     </header>
   );
 };
+
+{
+}

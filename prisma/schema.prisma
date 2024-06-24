@@ -1,0 +1,109 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id      Int      @id @default(autoincrement())
+  email   String   @unique
+  name    String?
+  resumes Resume[]
+}
+
+model Resume {
+  id         Int          @id @default(autoincrement())
+  title      String
+  user       User         @relation(fields: [userId], references: [id])
+  userId     Int
+  Basic      Basic[]
+  Certifiate Certifiate[]
+  Education  Education[]
+  Language   Language[]
+  Award      Award[]
+  Link       Link[]
+  Work       Work[]
+}
+
+// 기본정보
+model Basic {
+  id        Int    @id @default(autoincrement())
+  name      String
+  mobile_no String
+  email     String
+  resume    Resume @relation(fields: [resumeId], references: [id])
+  resumeId  Int
+}
+
+// 자격증
+model Certifiate {
+  id           Int      @id @default(autoincrement())
+  order        Int
+  title        String
+  organization String
+  issuedAt     DateTime
+  resume       Resume   @relation(fields: [resumeId], references: [id])
+  resumeId     Int
+}
+
+// 외국어
+model Language {
+  id       Int    @id @default(autoincrement())
+  order    Int
+  title    String
+  score    String
+  resume   Resume @relation(fields: [resumeId], references: [id])
+  resumeId Int
+}
+
+// 학력
+model Education {
+  id         Int      @id @default(autoincrement())
+  school     String
+  major      String
+  start_dt   DateTime
+  end_dt     DateTime
+  isProgress Boolean
+  resume     Resume   @relation(fields: [resumeId], references: [id])
+  resumeId   Int
+}
+
+// 수상
+model Award {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  issuedAt    DateTime
+  resume      Resume   @relation(fields: [resumeId], references: [id])
+  resumeId    Int
+}
+
+// 링크
+model Link {
+  id       Int    @id @default(autoincrement())
+  title    String
+  url      String
+  resume   Resume @relation(fields: [resumeId], references: [id])
+  resumeId Int
+}
+
+// 경력
+model Work {
+  id         Int      @id @default(autoincrement())
+  company    String
+  department String
+  start_dt   DateTime
+  end_dt     DateTime
+  isProgress Boolean
+  resume     Resume   @relation(fields: [resumeId], references: [id])
+  resumeId   Int
+}

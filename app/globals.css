@@ -16,7 +16,8 @@
     --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
+    --secondary: 210 40% 97%;
+    /* --secondary: 210 40% 95%; */
     --secondary-foreground: 222.2 47.4% 11.2%;
 
     --muted: 210 40% 96.1%;
@@ -151,7 +152,8 @@ body,
 }
 
 * {
-  scroll-margin-top: 20px;
+  scroll-margin-top: 100px;
+  /* border: 1px solid black; */
 }
 
 progress::-webkit-progress-bar {
@@ -160,4 +162,11 @@ progress::-webkit-progress-bar {
 
 progress::-webkit-progress-value {
   background-color: #3b82f6;
+}
+
+.card {
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+  border-radius: 0;
 }
