@@ -1,124 +1,69 @@
 import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { ResumeCard } from "./resume-card";
+import { useFieldArray } from "react-hook-form";
 import { Input } from "@/components/ui/input";
-import { ChangeEvent, forwardRef, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { PlusSquare, XIcon } from "lucide-react";
-import { linkType } from "@/types";
-import { Switch } from "@/components/ui/switch";
+import { RemoveButton } from "./remove-button";
 
-export const CardLanguage = forwardRef<HTMLDivElement>((props, ref) => {
-  const [isOn, setIsOn] = useState(false);
-  const [links, setLinks] = useState<linkType[]>([
-    {
-      order: 0,
-      desc: "",
-      url: "",
-    },
-  ]);
+interface CardLanguageProps {
+  ref: React.LegacyRef<HTMLDivElement> | undefined;
+  control: any;
+}
 
-  const handleAdd = () => {
-    setLinks([
-      ...links,
-      {
-        order: links.length,
-        desc: "",
-        url: "",
-      },
-    ]);
-  };
+export const CardLanguage = ({ ref, control }: CardLanguageProps) => {
+  const { fields, append, remove } = useFieldArray({
+    control: control,
+    name: "language",
+  });
 
-  const handleDelete = (idx: number) => {
-    const _links: linkType[] = [];
-    let count = 0;
-    links.map((item) => {
-      if (item.order != idx) _links.push({ ...item, order: count++ });
-    });
-    setLinks(_links);
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>, idx: number) => {
-    const { value, name } = e.target;
-    if (name == "desc") links[idx].desc = value;
-    if (name == "url") links[idx].url = value;
-    setLinks([...links]);
-  };
+  const add = () => append({ language: "", test: "", score: "" });
 
   return (
-    <Card className="relative p-5 card" ref={ref}>
-      <CardHeader className="flex flex-row justify-between">
-        <CardTitle>외국어</CardTitle>
-        <Switch onCheckedChange={(e) => setIsOn(e)} checked={isOn} />
-      </CardHeader>
-      {isOn && (
-        <>
-          <CardContent className="mt-5">
-            <ul className="space-y-5">
-              {links.map((item) => (
-                <li className="flex gap-2" key={item.order}>
-                  <Select defaultValue="english">
-                    <SelectTrigger className="w-52">
-                      <SelectValue placeholder="언어" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="english">영어</SelectItem>
-                      <SelectItem value="japanese">일본어</SelectItem>
-                      <SelectItem value="chinese">중국어</SelectItem>
-                      <SelectItem value="other">직접입력</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Input className="w-32" placeholder="" disabled />
-
-                  <Input
-                    placeholder="시험명"
-                    className="w-40"
-                    value={item.desc}
-                    onChange={(e) => handleChange(e, item.order)}
-                    id="desc"
-                    name="desc"
-                  />
-                  <Input
-                    placeholder="성적"
-                    value={item.url}
-                    onChange={(e) => handleChange(e, item.order)}
-                    id="url"
-                    name="url"
-                  />
-                  <Button
-                    className="aspect-square p-0 m-0"
-                    variant={"secondary"}
-                    onClick={() => handleDelete(item.order)}
-                  >
-                    <XIcon />
-                  </Button>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-          <CardFooter className="w-full">
-            <Button
-              variant={"ghost"}
-              className="w-full flex-2 p-7"
-              onClick={handleAdd}
-            >
-              <PlusSquare className="text-blue-500" size={48} />
-            </Button>
-          </CardFooter>
-        </>
-      )}
-    </Card>
+    <ResumeCard title="외국어" ref={ref} control={control} add={add}>
+      <ul className="space-y-5">
+        {fields.map((item, idx) => (
+          <li className="flex gap-2" key={item.id}>
+            <FormField
+              name={`language.${idx}.language`}
+              render={({ field }) => (
+                <FormItem className="w-40">
+                  <FormControl>
+                    <Input placeholder="언어" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name={`language.${idx}.test`}
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormControl>
+                    <Input placeholder="시험명" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name={`language.${idx}.score`}
+              render={({ field }) => (
+                <FormItem className="w-32">
+                  <FormControl>
+                    <Input placeholder="성적" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <RemoveButton handleRemove={() => remove(idx)} />
+          </li>
+        ))}
+      </ul>
+    </ResumeCard>
   );
-});
+};

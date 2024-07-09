@@ -1,115 +1,70 @@
+"use client";
 import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
-import { Calendar } from "@/components/ui/calendar";
-import { format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
-
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { ResumeCard } from "./resume-card";
+import { useFieldArray } from "react-hook-form";
 import { Input } from "@/components/ui/input";
-import { ChangeEvent, forwardRef, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { PlusSquare, XIcon } from "lucide-react";
-import { linkType } from "@/types";
-import { Switch } from "@/components/ui/switch";
-import { DatePicker } from "@/components/date-picker";
+import { RemoveButton } from "./remove-button";
 
-export const CardCertificate = forwardRef<HTMLDivElement>((props, ref) => {
-  const [isOn, setIsOn] = useState(false);
-  const [links, setLinks] = useState<linkType[]>([
-    {
-      order: 0,
-      desc: "",
-      url: "",
-    },
-  ]);
+interface CardCertificateProps {
+  ref: React.LegacyRef<HTMLDivElement> | undefined;
+  control: any;
+}
 
-  const handleAdd = () => {
-    setLinks([
-      ...links,
-      {
-        order: links.length,
-        desc: "",
-        url: "",
-      },
-    ]);
-  };
+export const CardCertificate = ({ ref, control }: CardCertificateProps) => {
+  const { fields, append, remove } = useFieldArray({
+    control: control,
+    name: "certi",
+  });
 
-  const handleDelete = (idx: number) => {
-    const _links: linkType[] = [];
-    let count = 0;
-    links.map((item) => {
-      if (item.order != idx) _links.push({ ...item, order: count++ });
-    });
-    setLinks(_links);
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>, idx: number) => {
-    const { value, name } = e.target;
-    if (name == "desc") links[idx].desc = value;
-    if (name == "url") links[idx].url = value;
-    setLinks([...links]);
-  };
+  const add = () => append({ title: "", organization: "", date: "" });
 
   return (
-    <Card className="relative p-5 card" ref={ref}>
-      <CardHeader className="flex flex-row justify-between items-center">
-        <CardTitle>자격증</CardTitle>
-        <Switch onCheckedChange={setIsOn} checked={isOn} />
-      </CardHeader>
-      {isOn && (
-        <>
-          <CardContent className="mt-5">
-            <ul className="space-y-5">
-              {links.map((item) => (
-                <li className="flex gap-2" key={item.order}>
-                  <Input
-                    placeholder="자격증"
-                    className="w-36"
-                    value={item.desc}
-                    onChange={(e) => handleChange(e, item.order)}
-                    id="desc"
-                    name="desc"
-                  />
-                  <Input
-                    placeholder="발급기관"
-                    value={item.url}
-                    onChange={(e) => handleChange(e, item.order)}
-                    id="url"
-                    name="url"
-                  />
-                  <DatePicker />
-                  <Button
-                    className="aspect-square p-0 m-0"
-                    variant={"secondary"}
-                    onClick={() => handleDelete(item.order)}
-                  >
-                    <XIcon />
-                  </Button>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-          <CardFooter className="w-full">
-            <Button
-              variant={"ghost"}
-              className="w-full flex-2 p-7"
-              onClick={handleAdd}
-            >
-              <PlusSquare className="text-blue-500" size={48} />
-            </Button>
-          </CardFooter>
-        </>
-      )}
-    </Card>
+    <ResumeCard title="자격증" ref={ref} control={control} add={add}>
+      <ul className="space-y-5">
+        {fields.map((item, idx) => (
+          <li className="flex gap-2" key={item.id}>
+            <FormField
+              name={`certi.${idx}.title`}
+              render={({ field }) => (
+                <FormItem className="w-40">
+                  <FormControl>
+                    <Input placeholder="자격증명" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name={`certi.${idx}.organization`}
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormControl>
+                    <Input placeholder="발급기관" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name={`certi.${idx}.date`}
+              render={({ field }) => (
+                <FormItem className="w-32">
+                  <FormControl>
+                    <Input placeholder="날짜" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <RemoveButton handleRemove={() => remove(idx)} />
+          </li>
+        ))}
+      </ul>
+    </ResumeCard>
   );
-});
+};

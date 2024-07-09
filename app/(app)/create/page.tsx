@@ -12,6 +12,13 @@ import { CardLanguage } from "./_components/card/card-language";
 import { CardLink } from "./_components/card/card-link";
 import { CardCover } from "./_components/card/card-cover";
 import { Sidenav } from "../_components/side-nav";
+import { useFieldArray, useForm } from "react-hook-form";
+import * as z from "zod";
+import { resumeSchema } from "@/validation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 const CreatePage = () => {
   const profileRef = useRef<HTMLDivElement>(null);
@@ -23,6 +30,33 @@ const CreatePage = () => {
   const coverRef = useRef<HTMLDivElement>(null);
   const awardRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
+
+  const form = useForm<z.infer<typeof resumeSchema>>({
+    resolver: zodResolver(resumeSchema),
+    defaultValues: {
+      profile: {
+        username: "",
+        email: "",
+        mobile_no: "",
+      },
+      work: [
+        {
+          start_date: "",
+          end_date: "",
+          company: "",
+          department: "",
+        },
+      ],
+      edu: [
+        {
+          start_date: "",
+          end_date: "",
+          school: "",
+          major: "",
+        },
+      ],
+    },
+  });
 
   const handleScroll = (type: string) => {
     switch (type) {
@@ -72,27 +106,51 @@ const CreatePage = () => {
     coverRef,
   ];
 
+  function onSubmit(values: z.infer<typeof resumeSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log(values);
+  }
+
   return (
     <>
       <Sidenav handleScroll={handleScroll} refs={refs} />
-      <section className="pl-[25rem] 2xl:pl-[600px] pr-5 pt-20 max-w-[1420px] space-y-5">
-        <CardProfile ref={profileRef} />
-        <Separator />
-        <CardWork ref={workRef} />
-        <Separator />
-        <CardEducation ref={eduRef} />
-        <Separator />
-        <CardAward ref={awardRef} />
-        <Separator />
-        <CardCertificate ref={certieRef} />
-        <Separator />
-        <CardLanguage ref={langRef} />
-        <Separator />
-        <CardLink ref={linkRef} />
-        <Separator />
-        <CardCover ref={coverRef} />
-        <div className="h-[800px] w-full" />
-      </section>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <section className="pl-[25rem] 2xl:pl-[600px] pr-5 pt-20 max-w-[1420px] space-y-5">
+            <Button type="submit">제출</Button>
+            {/* <Button
+              onClick={() =>
+                append({
+                  company: "",
+                  department: "",
+                  start_date: "",
+                  end_date: "",
+                })
+              }
+              type="button"
+            >
+              늘리기
+            </Button> */}
+            <CardProfile ref={profileRef} control={form.control} />
+            <Separator />
+            <CardWork ref={workRef} control={form.control} />
+            <Separator />
+            <CardEducation ref={eduRef} control={form.control} />
+            <Separator />
+            <CardAward ref={awardRef} control={form.control} />
+            <Separator />
+            <CardCertificate ref={certieRef} control={form.control} />
+            <Separator />
+            <CardLanguage ref={langRef} control={form.control} />
+            <Separator />
+            <CardLink ref={linkRef} control={form.control} />
+            <Separator />
+            {/* <CardCover ref={coverRef} /> */}
+            <div className="h-[800px] w-full" />
+          </section>
+        </form>
+      </Form>
     </>
   );
 };
