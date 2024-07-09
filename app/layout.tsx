@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
-import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
 
 const inter = Noto_Sans_KR({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "이력서 박스",
-  description: "무료로 이력서를 기록하고 출력하실 수 있습니다.",
+  title: "Resume box",
+  description: "이력서를 만드는 곳",
 };
 
 export default function RootLayout({
@@ -17,17 +15,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" suppressHydrationWarning>
-      <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <ClerkProvider>{children}</ClerkProvider>
-        </ThemeProvider>
-      </body>
+    <html lang="ko">
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }
