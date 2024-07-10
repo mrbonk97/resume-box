@@ -119,19 +119,6 @@ const CreatePage = () => {
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <section className="pl-[25rem] 2xl:pl-[600px] pr-5 pt-20 max-w-[1420px] space-y-5">
             <Button type="submit">제출</Button>
-            {/* <Button
-              onClick={() =>
-                append({
-                  company: "",
-                  department: "",
-                  start_date: "",
-                  end_date: "",
-                })
-              }
-              type="button"
-            >
-              늘리기
-            </Button> */}
             <CardProfile ref={profileRef} control={form.control} />
             <Separator />
             <CardWork ref={workRef} control={form.control} />

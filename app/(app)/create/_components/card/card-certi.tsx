@@ -9,13 +9,9 @@ import { ResumeCard } from "./resume-card";
 import { useFieldArray } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { RemoveButton } from "./remove-button";
+import { CardDetailProps } from "@/validation";
 
-interface CardCertificateProps {
-  ref: React.LegacyRef<HTMLDivElement> | undefined;
-  control: any;
-}
-
-export const CardCertificate = ({ ref, control }: CardCertificateProps) => {
+export const CardCertificate = ({ ref, control }: CardDetailProps) => {
   const { fields, append, remove } = useFieldArray({
     control: control,
     name: "certi",
@@ -24,7 +20,7 @@ export const CardCertificate = ({ ref, control }: CardCertificateProps) => {
   const add = () => append({ title: "", organization: "", date: "" });
 
   return (
-    <ResumeCard title="자격증" ref={ref} control={control} add={add}>
+    <ResumeCard title="자격증" ref={ref} add={add}>
       <ul className="space-y-5">
         {fields.map((item, idx) => (
           <li className="flex gap-2" key={item.id}>

@@ -1,3 +1,4 @@
+"use client";
 import {
   FormControl,
   FormField,
@@ -8,13 +9,9 @@ import { ResumeCard } from "./resume-card";
 import { useFieldArray } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { RemoveButton } from "./remove-button";
+import { CardDetailProps } from "@/validation";
 
-interface CardLanguageProps {
-  ref: React.LegacyRef<HTMLDivElement> | undefined;
-  control: any;
-}
-
-export const CardLanguage = ({ ref, control }: CardLanguageProps) => {
+export const CardLanguage = ({ ref, control }: CardDetailProps) => {
   const { fields, append, remove } = useFieldArray({
     control: control,
     name: "language",
@@ -23,7 +20,7 @@ export const CardLanguage = ({ ref, control }: CardLanguageProps) => {
   const add = () => append({ language: "", test: "", score: "" });
 
   return (
-    <ResumeCard title="외국어" ref={ref} control={control} add={add}>
+    <ResumeCard title="외국어" ref={ref} add={add}>
       <ul className="space-y-5">
         {fields.map((item, idx) => (
           <li className="flex gap-2" key={item.id}>

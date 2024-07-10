@@ -11,9 +11,8 @@ import { Switch } from "@/components/ui/switch";
 
 import { forwardRef, useState } from "react";
 import { PlusSquare } from "lucide-react";
-import { ResumeControlType } from "@/validation";
 
-interface CardProps extends ResumeControlType {
+interface CardProps {
   title: string;
   add: () => void;
   children: React.ReactNode;

@@ -9,13 +9,9 @@ import { ResumeCard } from "./resume-card";
 import { useFieldArray } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { RemoveButton } from "./remove-button";
+import { CardDetailProps } from "@/validation";
 
-interface CardAwardProps {
-  ref: React.LegacyRef<HTMLDivElement> | undefined;
-  control: any;
-}
-
-export const CardAward = ({ ref, control }: CardAwardProps) => {
+export const CardAward = ({ ref, control }: CardDetailProps) => {
   const { fields, append, remove } = useFieldArray({
     control: control,
     name: "award",
@@ -25,7 +21,7 @@ export const CardAward = ({ ref, control }: CardAwardProps) => {
     append({ title: "", organization: "", date: "", description: "" });
 
   return (
-    <ResumeCard title="수상" ref={ref} control={control} add={add}>
+    <ResumeCard title="수상" ref={ref} add={add}>
       <ul className="space-y-5">
         {fields.map((item, idx) => (
           <li className="flex gap-2" key={item.id}>
