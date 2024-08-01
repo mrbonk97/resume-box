@@ -22,15 +22,15 @@ export default function Home() {
         <div className="w-1/2 pt-60 pl-40">
           <hgroup>
             <h2 className="text-5xl font-bold">맞춤형 이력서 관리 플랫폼</h2>
-            <h1 className="mt-3 text-5xl font-bold">Endev</h1>
+            <h1 className="mt-3 text-5xl font-bold">resume-box</h1>
           </hgroup>
 
           {/* 중간파트 */}
           <div className="pl-5">
             <p className="text-lg font-medium mt-20">
-              "기존의 이력서 플랫폼과는 자율성을 강조했다는 문구.
+              기존의 이력서 플랫폼과는 자율성을 강조했다는 문구.
               <br /> 커스터마이징이 쉽다는 문구 <br />
-              반할수밖에 없다는 문구"
+              정말 좋다는 문구
             </p>
             <div className="pl-2 mt-5 flex items-center gap-2">
               <Avatar>

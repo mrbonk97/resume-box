@@ -21,7 +21,7 @@ const eduSchema = z.object({
   major: z.string().optional(),
 });
 
-const awrdSchema = z.object({
+const awardSchema = z.object({
   title: z.string().optional(),
   organization: z.string().optional(),
   date: z.string().optional(),
@@ -45,31 +45,44 @@ const linkSchema = z.object({
   url: z.string().optional(),
 });
 
-const paragraph = z.object({
-  subtitle: z.string().optional(),
-  body: z.string().optional(),
-});
-
 const coverSchema = z.object({
-  title: z.string().optional(),
-  paragraphs: z.array(paragraph).optional(),
+  title: z.string(),
+  body: z.string(),
 });
 
 export const resumeSchema = z.object({
+  id: z.number(),
   profile: profileSchema,
+  isWorkOn: z.boolean(),
+  isEduOn: z.boolean(),
+  isAwardOn: z.boolean(),
+  isCertiOn: z.boolean(),
+  isLanguageOn: z.boolean(),
+  isLinkOn: z.boolean(),
+  isCoverOn: z.boolean(),
   work: z.array(workSchema).optional(),
   edu: z.array(eduSchema).optional(),
-  award: z.array(awrdSchema).optional(),
+  award: z.array(awardSchema).optional(),
   certi: z.array(certiSchema).optional(),
   language: z.array(languageSchema).optional(),
   link: z.array(linkSchema).optional(),
-  cover: z.array(coverSchema).optional(),
+  cover: coverSchema.optional(),
 });
 
 export interface CardDetailProps {
   ref: React.LegacyRef<HTMLDivElement> | undefined;
+  isOn: boolean;
+  handleOn: () => void;
   control: Control<
     {
+      id: number;
+      isWorkOn: boolean;
+      isEduOn: boolean;
+      isAwardOn: boolean;
+      isCertiOn: boolean;
+      isLanguageOn: boolean;
+      isLinkOn: boolean;
+      isCoverOn: boolean;
       profile: {
         email: string;
         username: string;
@@ -118,13 +131,19 @@ export interface CardDetailProps {
             description?: string | undefined;
             url?: string | undefined;
           }[]
+        | undefined;
+      cover?:
+        | {
+            title: string;
+            body: string;
+          }
         | undefined;
     },
     any
   >;
 }
 
-export interface ResumeControlType {
+export interface Controls {
   control: Control<
     {
       profile: {
@@ -140,6 +159,7 @@ export interface ResumeControlType {
             department?: string | undefined;
           }[]
         | undefined;
+      isWorkOn: boolean;
       edu?:
         | {
             start_date?: string | undefined;
@@ -176,7 +196,22 @@ export interface ResumeControlType {
             url?: string | undefined;
           }[]
         | undefined;
+      cover?:
+        | {
+            title: string;
+            body: string;
+          }
+        | undefined;
     },
     any
   >;
 }
+
+export type isOnType =
+  | "isWorkOn"
+  | "isEduOn"
+  | "isAwardOn"
+  | "isCertiOn"
+  | "isLanguageOn"
+  | "isLinkOn"
+  | "isCoverOn";
